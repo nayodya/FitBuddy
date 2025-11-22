@@ -1,24 +1,22 @@
+import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  ScrollView,
-  StyleSheet,
-  ActivityIndicator,
-  TouchableOpacity,
   Animated,
   Dimensions,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { router } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
-import { RootState } from '../store';
-import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '../constants/styles';
+import { BorderRadius, Colors, FontSizes, FontWeights, Shadows, Spacing } from '../constants/styles';
 import { useTheme } from '../context/ThemeContext';
-import { Button } from '../components/Button';
-import { updateWaterIntake } from '../store/slices/userStatsSlice';
+import { RootState } from '../store';
 import { addActivity } from '../store/slices/activitySlice';
-import { setCurrentIndex, addFavorite, removeFavorite } from '../store/slices/wellnessTipsSlice';
+import { updateWaterIntake } from '../store/slices/userStatsSlice';
+import { addFavorite, removeFavorite, setCurrentIndex } from '../store/slices/wellnessTipsSlice';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -59,19 +57,6 @@ export const HomeScreen: React.FC = () => {
 
   const handleStartWorkout = () => {
     router.push('/(app)/exercises' as never);
-  };
-
-  const getTimeAgo = (timestamp: string) => {
-    const date = new Date(timestamp);
-    const now = new Date();
-    const diffMs = now.getTime() - date.getTime();
-    const diffMins = Math.floor(diffMs / 60000);
-    const diffHours = Math.floor(diffMs / 3600000);
-    const diffDays = Math.floor(diffMs / 86400000);
-
-    if (diffMins < 60) return `${diffMins}m ago`;
-    if (diffHours < 24) return `${diffHours}h ago`;
-    return `${diffDays}d ago`;
   };
 
   const currentTip = wellnessTips[currentTipIndex];
@@ -256,47 +241,6 @@ export const HomeScreen: React.FC = () => {
           </View>
         </View>
 
-        {/* Recent Activity Feed */}
-        {activities.length > 0 && (
-          <View style={styles.activitySection}>
-            <Text style={[styles.sectionTitle, { color: colors.text, fontWeight: FontWeights.bold }]}>
-              Recent Activity
-            </Text>
-            <View style={styles.activityList}>
-              {activities.slice(0, 5).map(activity => (
-                <View
-                  key={activity.id}
-                  style={[
-                    styles.activityItem,
-                    { borderBottomColor: colors.border }
-                  ]}
-                >
-                  <View style={[styles.activityIconBg, { backgroundColor: colors.cardSecondary }]}>
-                    <Feather
-                      name={activity.icon as any || 'activity'}
-                      size={18}
-                      color={colors.primary}
-                    />
-                  </View>
-                  <View style={styles.activityContent}>
-                    <Text style={[styles.activityName, { color: colors.text, fontWeight: FontWeights.medium }]}>
-                      {activity.name}
-                    </Text>
-                    {activity.duration && (
-                      <Text style={[styles.activityDuration, { color: colors.textSecondary, fontSize: FontSizes.xs }]}>
-                        {activity.duration} min
-                      </Text>
-                    )}
-                  </View>
-                  <Text style={[styles.activityTime, { color: colors.textTertiary, fontSize: FontSizes.xs }]}>
-                    {getTimeAgo(activity.timestamp)}
-                  </Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        )}
-
         <View style={{ height: Spacing.lg }} />
       </Animated.View>
     </ScrollView>
@@ -475,39 +419,5 @@ const styles = StyleSheet.create({
     width: 8,
     height: 8,
     borderRadius: 4,
-  },
-  activitySection: {
-    marginBottom: Spacing.xl,
-  },
-  activityList: {
-    borderRadius: BorderRadius.lg,
-    overflow: 'hidden',
-  },
-  activityItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingVertical: Spacing.md,
-    borderBottomWidth: 1,
-    paddingHorizontal: Spacing.md,
-  },
-  activityIconBg: {
-    width: 40,
-    height: 40,
-    borderRadius: BorderRadius.md,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginRight: Spacing.md,
-  },
-  activityContent: {
-    flex: 1,
-  },
-  activityName: {
-    fontSize: FontSizes.md,
-  },
-  activityDuration: {
-    marginTop: Spacing.xs,
-  },
-  activityTime: {
-    marginLeft: Spacing.md,
   },
 });

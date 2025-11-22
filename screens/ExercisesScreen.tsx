@@ -1,23 +1,24 @@
+import { Feather } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
   ActivityIndicator,
-  RefreshControl,
-  TextInput,
   Animated,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useDispatch, useSelector } from 'react-redux';
-import { router } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
-import { RootState } from '../store';
-import { setExercises, setSelectedExercise, fetchExercisesStart, fetchExercisesFailure } from '../store/slices/exerciseSlice';
-import { exerciseService } from '../services/exerciseService';
 import { ExerciseCard } from '../components/ExerciseCard';
-import { Colors, Spacing, BorderRadius, FontSizes, FontWeights, Shadows } from '../constants/styles';
+import { BorderRadius, Colors, FontSizes, FontWeights, Shadows, Spacing } from '../constants/styles';
 import { useTheme } from '../context/ThemeContext';
+import { exerciseService } from '../services/exerciseService';
+import { RootState } from '../store';
+import { fetchExercisesFailure, fetchExercisesStart, setExercises, setSelectedExercise } from '../store/slices/exerciseSlice';
 import { addFavorite, removeFavorite } from '../store/slices/favoritesSlice';
 
 export const ExercisesScreen: React.FC = () => {
@@ -162,7 +163,7 @@ export const ExercisesScreen: React.FC = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <FlatList
         data={filteredExercises}
         renderItem={renderExerciseCard}
@@ -188,7 +189,7 @@ export const ExercisesScreen: React.FC = () => {
           </Text>
         </View>
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 

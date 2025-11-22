@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  ActivityIndicator,
-  Alert,
-  Animated,
-} from 'react-native';
-import { useDispatch } from 'react-redux';
-import { useForm, Controller } from 'react-hook-form';
+import { Feather } from '@expo/vector-icons';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { router } from 'expo-router';
-import { Feather } from '@expo/vector-icons';
+import React, { useState } from 'react';
+import { Controller, useForm } from 'react-hook-form';
+import {
+    Alert,
+    Animated,
+    KeyboardAvoidingView,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    View
+} from 'react-native';
+import { useDispatch } from 'react-redux';
 import { Button } from '../components/Button';
 import { FormInput } from '../components/FormInput';
-import { loginValidationSchema } from '../utils/validations';
-import { authService } from '../services/authService';
-import { loginSuccess, loginFailure, setLoading } from '../store/slices/authSlice';
-import { storage, StorageKeys } from '../utils/storage';
-import { Colors, Spacing, FontSizes, FontWeights, BorderRadius, Shadows } from '../constants/styles';
+import { BorderRadius, Colors, FontSizes, FontWeights, Spacing } from '../constants/styles';
 import { useTheme } from '../context/ThemeContext';
+import { authService } from '../services/authService';
+import { loginFailure, loginSuccess, setLoading } from '../store/slices/authSlice';
+import { storage, StorageKeys } from '../utils/storage';
+import { loginValidationSchema } from '../utils/validations';
 
 interface LoginFormData {
   email: string;
@@ -152,22 +151,6 @@ export const LoginScreen: React.FC = () => {
             </Text>
           </Text>
         </Animated.View>
-
-        <Animated.View style={[styles.demoCredentials, { 
-          backgroundColor: colors.cardSecondary,
-          borderColor: colors.border,
-          opacity: fadeAnim 
-        }]}>
-          <View style={styles.demoHeader}>
-            <Feather name="info" size={16} color={colors.primary} />
-            <Text style={[styles.demoTitle, { color: colors.primary, fontWeight: FontWeights.semibold }]}>
-              Demo Credentials
-            </Text>
-          </View>
-          <Text style={[styles.demoText, { color: colors.textSecondary, fontSize: FontSizes.sm }]}>
-            📧 john@example.com{'\n'}🔐 password123
-          </Text>
-        </Animated.View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -220,24 +203,5 @@ const styles = StyleSheet.create({
   },
   registerLink: {
     textDecorationLine: 'underline',
-  },
-  demoCredentials: {
-    paddingHorizontal: Spacing.md,
-    paddingVertical: Spacing.md,
-    borderRadius: BorderRadius.lg,
-    borderWidth: 1,
-    marginTop: Spacing.lg,
-  },
-  demoHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: Spacing.sm,
-    marginBottom: Spacing.sm,
-  },
-  demoTitle: {
-    marginBottom: 0,
-  },
-  demoText: {
-    lineHeight: 24,
   },
 });

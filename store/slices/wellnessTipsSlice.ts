@@ -36,7 +36,7 @@ const initialState: WellnessTipsState = {
       title: 'Balanced Nutrition',
       description: 'Eat a mix of proteins, carbs, and healthy fats for sustained energy throughout the day.',
       category: 'nutrition',
-      icon: 'fork-knife',
+      icon: 'coffee',
     },
     {
       id: '4',
